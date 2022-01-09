@@ -14,7 +14,6 @@ const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/404');
 
-
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true })); // для приёма веб-страниц внутри POST-запроса
 app.use(express.json());
@@ -41,7 +40,6 @@ const userCredentialsValidator = celebrate({
   }),
 });
 
-
 app.use(requestLogger); // подключаем логгер запросов
 
 // роуты, не требующие авторизации,
@@ -66,5 +64,5 @@ app.use(error);
 
 app.listen(PORT, () => {
   // Если всё работает, консоль покажет, какой порт приложение слушает
-  console.log(`App listening on port ${PORT}`)
-})
+  // console.log(`App listening on port ${PORT}`)
+});

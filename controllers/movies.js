@@ -4,19 +4,43 @@ const BadRequestError = require('../errors/400');
 const ForbiddenError = require('../errors/403');
 const NotFoundError = require('../errors/404');
 
-
 module.exports.getMovies = (req, res, next) => {
-  Card.find({})
+  Movie.find({})
     .then((movie) => res.status(200).send(movie))
     // данные не записались, вернём ошибку
     .catch((err) => next(err));
 };
 
 module.exports.createMovie = (req, res, next) => {
-  const { country, director, duration, year, description, image, trailer, thumbnail, movieId, nameRU, nameEN } = req.body;
+  const {
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+  } = req.body;
   const owner = req.user._id;
 
-  Movie.create({ country, director, duration, year, description, image, trailer, thumbnail, owner, movieId, nameRU, nameEN })
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    thumbnail,
+    owner,
+    movieId,
+    nameRU,
+    nameEN,
+  })
     // вернём записанные в базу данные
     .then((movie) => res.status(200).send(movie))
     // данные не записались, вернём ошибку
