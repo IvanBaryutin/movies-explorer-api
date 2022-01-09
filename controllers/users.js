@@ -58,6 +58,61 @@ module.exports.updateUserInfo = (req, res, next) => {
     });
 };
 
+module.exports.createUser = (req, res, next) => {
+  const {
+    name,
+    email,
+    password,
+  } = req.body;
+
+  // хешируем пароль
+  bcrypt.hash(password, 10)
+    .then((hash) => User.create({
+      name,
+      email,
+      password: hash,
+    }))
+    .then((user) => {
+      res.status(201).send({
+        data: {
+          name: user.name,
+          email: user.email,
+        },
+      });
+    })
+    // данные не записались, вернём ошибку
+    .catch((err) => {
+      if (err.code === 11000) {
+        // throw new ConflictError('Пользователь с таким email уже существует');
+        next(new ConflictError('Пользователь с таким email уже существует'));
+      }
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+      } else {
+        next(err);
+      }
+    });
+};
+
+module.exports.login = (req, res, next) => {
+  const { email, password } = req.body;
+
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      // аутентификация успешна! пользователь в переменной user
+      // создадим токен
+      // const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key', { expiresIn: '7d' });
+
+      // вернём токен
+      res.send({ token });
+    })
+    .catch((err) => {
+      // ошибка аутентификации
+      next(new UnauthorizedError(err.message));
+    });
+};
+
 /*
 module.exports.createUser = (req, res, next) => {
   const {

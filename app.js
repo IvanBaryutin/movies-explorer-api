@@ -10,8 +10,8 @@ const { errors } = require('celebrate');
 const error = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-//const { createUser, login } = require('./controllers/users');
-//const auth = require('./middlewares/auth');
+const { createUser, login } = require('./controllers/users');
+const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/404');
 
 
@@ -33,8 +33,23 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   // useFindAndModify: false
 });
 
+const userCredentialsValidator = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+    name: Joi.string().min(2).max(30),
+  }),
+});
+
 
 app.use(requestLogger); // подключаем логгер запросов
+
+// роуты, не требующие авторизации,
+app.post('/signup', userCredentialsValidator, createUser);
+app.post('/signin', userCredentialsValidator, login);
+
+// авторизация
+app.use(auth);
 
 app.use('/users', require('./routes/users'));
 app.use('/movies', require('./routes/movies'));
