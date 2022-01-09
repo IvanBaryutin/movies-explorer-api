@@ -1,0 +1,21 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npx eslint .",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IvanBaryutin/movies-explorer-api.git"
+  },
+  "author": "IvanBaryutin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IvanBaryutin/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/IvanBaryutin/movies-explorer-api#readme"
+}
