@@ -13,7 +13,6 @@ module.exports = (req, res, next) => {
 
   // убеждаемся, что он есть или начинается с Bearer
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    // return res.status(401).send({ message: 'Необходима авторизация' });
     throw new UnauthorizedError('Необходима авторизация');
   }
 
@@ -23,10 +22,8 @@ module.exports = (req, res, next) => {
 
   try {
     // попытаемся верифицировать токен
-    // payload = jwt.verify(token, 'some-secret-key');
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key');
   } catch (err) {
-    // return res.status(401).send({ message: 'Необходима авторизация' });
     throw new UnauthorizedError('Необходима авторизация');
   }
 
