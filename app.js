@@ -57,6 +57,7 @@ app.use((req, res, next) => {
   }
 
   next();
+  return false; // fix linter error
 });
 
 // подключаемся к серверу mongo
