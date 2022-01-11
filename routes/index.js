@@ -4,6 +4,8 @@ const { celebrate, Joi } = require('celebrate');
 
 const auth = require('../middlewares/auth');
 
+const NotFoundError = require('../errors/404');
+
 const {
   createUser,
   login,
@@ -22,7 +24,7 @@ router.post('/signup', userCredentialsValidator, createUser);
 router.post('/signin', userCredentialsValidator, login);
 
 // авторизация
-// router.use(auth);
+router.use(auth);
 
 router.use('/users', require('./users'));
 router.use('/movies', require('./movies'));

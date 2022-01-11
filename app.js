@@ -5,15 +5,10 @@ const mongoose = require('mongoose');
 const app = express();
 const { PORT = 3000 } = process.env;
 const { DB_URL = 'mongodb://localhost:27017/moviesdb' } = process.env;
-// const { celebrate, Joi } = require('celebrate');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const error = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-
-const { createUser, login } = require('./controllers/users');
-// const auth = require('./middlewares/auth');
-// const NotFoundError = require('./errors/404');
 const routes = require('./routes/index');
 
 // Массив доменов, с которых разрешены кросс-доменные запросы
@@ -70,35 +65,9 @@ mongoose.connect(DB_URL, {
   // useFindAndModify: false
 });
 
-/*
-const userCredentialsValidator = celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-    name: Joi.string().min(2).max(30),
-  }),
-});
-*/
-
 app.use(requestLogger); // подключаем логгер запросов
 
 app.use(routes);
-
-/*
-// роуты, не требующие авторизации,
-app.post('/signup', userCredentialsValidator, createUser);
-app.post('/signin', userCredentialsValidator, login);
-
-// авторизация
-app.use(auth);
-
-app.use('/users', require('./routes/users'));
-app.use('/movies', require('./routes/movies'));
-
-app.use((req, res, next) => {
-  next(new NotFoundError('Маршрут не найден'));
-});
-*/
 
 app.use(errorLogger); // подключаем логгер ошибок
 
