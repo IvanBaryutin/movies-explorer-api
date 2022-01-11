@@ -29,7 +29,7 @@ router.use(auth);
 router.use('/users', require('./users'));
 router.use('/movies', require('./movies'));
 
-router.use((req, res, next) => {
+router.use('*', (req, res, next) => {
   next(new NotFoundError('Маршрут не найден'));
 });
 

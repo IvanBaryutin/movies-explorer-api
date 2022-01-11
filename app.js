@@ -7,6 +7,7 @@ const { PORT = 3000 } = process.env;
 const { DB_URL = 'mongodb://localhost:27017/moviesdb' } = process.env;
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const expressRateLimiter = require('./middlewares/rateLimit');
 const error = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes/index');
@@ -66,6 +67,8 @@ mongoose.connect(DB_URL, {
 });
 
 app.use(requestLogger); // подключаем логгер запросов
+
+app.use(expressRateLimiter); // подключаем ограничитель запросов
 
 app.use(routes);
 
