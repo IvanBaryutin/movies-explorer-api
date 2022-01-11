@@ -19,19 +19,12 @@ const NotFoundError = require('./errors/404');
 const allowedCors = [
   'https://the-diploma.nomoredomains.rocks',
   'http://the-diploma.nomoredomains.rocks',
-  'localhost:3000',
+  'xlocalhost:3000',
 ];
 
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true })); // для приёма веб-страниц внутри POST-запроса
 app.use(express.json());
-
-app.use((req, res, next) => {
-  req.user = {
-    _id: '61dd4813c8f41c58e1d85cf3', // _id созданного пользователя
-  };
-  next();
-});
 
 app.use((req, res, next) => {
   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
