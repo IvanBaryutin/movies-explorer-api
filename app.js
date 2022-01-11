@@ -24,13 +24,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // для приёма ве�
 app.use(express.json());
 
 app.use((req, res, next) => {
-  req.user = {
-    _id: '61dd7b776523d8935d377e47', // _id созданного пользователя
-  };
-  next();
-});
-
-app.use((req, res, next) => {
   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
   // сохраняем список заголовков исходного запроса
   const requestHeaders = req.headers['access-control-request-headers'];
