@@ -19,7 +19,7 @@ const NotFoundError = require('./errors/404');
 const allowedCors = [
   'https://the-diploma.nomoredomains.rocks',
   'http://the-diploma.nomoredomains.rocks',
-  'xlocalhost:3000',
+  'localhost:3000',
 ];
 
 app.use(bodyParser.json()); // для собирания JSON-формата
@@ -92,7 +92,4 @@ app.use(errors()); // обработчик ошибок celebrate
 
 app.use(error);
 
-app.listen(PORT, () => {
-  // Если всё работает, консоль покажет, какой порт приложение слушает
-  // console.log(`App listening on port ${PORT}`)
-});
+app.listen(PORT);
