@@ -6,4 +6,4 @@
 
 ## Ссылка на backend https://api.diploma.nomoredomains.rocks
 
-## Public IP: 51.250.15.150
+## Public IP: 178.154.201.205

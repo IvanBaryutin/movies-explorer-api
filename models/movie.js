@@ -42,7 +42,6 @@ const movieSchema = new mongoose.Schema({
   thumbnail: {
     type: String,
     required: true,
-    unique: true,
     validate: [isURL, 'Некорректный url'],
   },
   owner: {

@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const { PORT = 3000 } = process.env;
+const { PORT = 4000 } = process.env;
 const { DB_URL = 'mongodb://localhost:27017/moviesdb' } = process.env;
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
